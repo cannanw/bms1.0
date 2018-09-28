@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wbms.bms.book.dao.BookDao">
+
+	<!-- 根据id查找图书信息 -->
+	<select id="findObjectById" parameterType="integer" resultType="book">
+		SELECT bId,isbn,bName,bClass,author,press,
+                    publishTime,price,num,bookshelfNum,state,
+                    createdTime,modifiedTime,createdUser,modifiedUser 
+        FROM tb_book WHERE bId=#{bId}
+	</select>
+	
+	<!-- 更新一个图书信息 -->
+	<update id="updateObject" parameterType="book">
+		UPDATE tb_book
+		SET isbn=#{isbn},bName=#{bName},bClass=#{bClass},author=#{author},
+			  press=#{press},publishTime=#{publishTime},price=#{price},num=#{num},
+			  bookshelfNum=#{bookshelfNum},state=#{state},modifiedTime=now(),modifiedUser=#{modifiedUser}
+		WHERE bId=#{bId}
+	</update>
+	
+	<!-- 插入一个图书 -->
+	<insert id="insertObject" parameterType="book">
+		INSERT INTO tb_book
+		values
+		(null,#{isbn},#{bName},#{bClass},#{author},#{press},#{publishTime},#{price},
+		#{num},#{bookshelfNum},#{state},now(),now(),#{createdUser},#{modifiedUser})
+	</insert>
+	
+	<!-- 删除一个图书 -->
+	<delete id="deleteObject">
+		DELETE FROM tb_book <include refid="whereId"/>
+	</delete>
+	
+	<!-- 定义一个查询语句获取所有图书信息 -->
+	<select id="findObjects" resultType="book" >
+		SELECT bId,isbn,bName,bClass,author,press,
+                    publishTime,price,num,bookshelfNum,state,
+                    createdTime,modifiedTime,createdUser,modifiedUser  
+        FROM tb_book
+	</select>
+	
+	<!-- 通过sql标签定义一个语句，后续其他元素用到了
+			可以通过include标签进行包含即可 -->
+	<!-- 查询使用(两个条件) -->
+	<sql id="whereQuery">
+		<where>
+			<if test="name!=null and name!='' ">
+				bName like concat('%',#{name},'%')
+			</if>
+			<if test="state!=null">
+				and state=#{state}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 所被选中的书籍id -->
+	<sql id="whereId">
+	   <where>
+	       bId in
+	       <!-- 通过动态sql拼接(1,2,3,4)这样格式的数据 -->
+	       <foreach collection="ids" 
+                         open="("
+                         close=")"
+                         item="item"
+                         separator=",">
+                #{item}
+           </foreach>
+	   </where>
+	</sql>
+	
+	<!-- 定义一个查询语句以分页形式获取所有图书信息 -->
+	<select id="findPageObjects" 
+		resultType="map">
+		SELECT * FROM tb_book
+		<include refid="whereQuery"/>
+		ORDER BY createdTime desc
+		LIMIT #{startIndex},#{pageSize}
+	</select>
+	
+	<!-- 定义一个查询语句获取表中记录数 -->
+	<select id="getRowCount" resultType="int">
+		SELECT count(*) FROM	tb_book
+		<include refid="whereQuery"/>
+	</select>
+	
+	<!-- 定义一个修改语句更改图书状态 
+		state 表示状态
+		ids 对应dao层方法中的数组参数
+	-->
+	<update id="stateById">
+		UPDATE tb_book
+		SET state=#{state}
+		<include refid="whereId"/>
+	</update>
+	
+</mapper>

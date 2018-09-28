@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/src/main/java/cn/wbms/bms/book/controller/BookController.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cn/wbms/bms/book/dao/BookDao.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cn/wbms/bms/book/service/impl/BookServiceImpl.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cn/wbms/bms/common/exception/ServiceException.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cn/wbms/bms/common/util/EncodeUtil.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/cn/wbms/bms/common/web/JsonResult.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/java/testBook/TestDaoCase.java" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

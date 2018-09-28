@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+		  <!-- mybatis控制台LOG输出 -->
+        <setting name="logImpl" value="LOG4J2" />
+    </settings>
+    <!-- 命名空间简化命名 -->
+    <!-- 
+    <typeAliases>
+       <typeAlias type="cn.wbms.bms.user.entity.User" alias="user"/>
+       <typeAlias type="cn.wbms.bms.user.dao.UserDao" alias="userDao"/>
+    </typeAliases>
+     -->
+    <!-- 
+                 为mapper文件中的参数类型,
+                 返回值类型定义别名
+                 假如是采用package元素定义,
+                 那默认类型的别名为类名并且
+                 第一个单词的首字母小写.
+     -->
+    <typeAliases>
+      <package name="cn.wbms.bms.user.entity"/>
+      <package name="cn.wbms.bms.book.entity"/>
+    </typeAliases>
+</configuration>
